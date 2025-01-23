@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'binance_api_key',
     ];
 
     /**
@@ -44,5 +45,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function setBinanceApiKeyAttribute($value)
+    {
+        $this->attributes['binance_api_key'] = Crypt::encryptString($value);
+    }
+
+    public function getBinanceApiKeyAttribute($value)
+    {
+        return $value ? Crypt::decryptString($value) : null;
     }
 }
